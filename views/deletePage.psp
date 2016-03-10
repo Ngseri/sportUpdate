@@ -1,0 +1,9 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "deletePage"%>
+<%@plsql parameter="nid" default="null"%>
+
+<%
+ delete from standing where standing_id=nid;
+ Commit;
+ %>
+ <META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">

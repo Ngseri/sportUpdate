@@ -1,0 +1,71 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "editPage"%>
+<%@plsql parameter="nid" default="null"%>
+<%!teamID standing.team_id%type;%>
+<%!matchPlayed standing.match_played%type;%>
+<%!teamPoint standing.team_point%type;%>
+<%!teamWin standing.team_win%type;%>
+<%!teamLose standing.team_lose%type;%>
+<%!teamTie standing.team_tie%type;%>
+<%!teamGoalScored standing.team_goalScored%type;%>
+<%!teamGoalTaken standing.team_goalTaken%type;%>
+<%!strcat Varchar(11);%>
+
+<head>
+<title>Edit Heading</title>
+</head>
+<body>
+<div align="center"><p><h1>Edit Heading</h1></p>
+<br>
+<hr />
+
+<% select team_id, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken into teamID, matchPlayed, teamPoint, teamWin, teamLose, teamTie, teamGoalScored, teamGoalTaken from standing where standing_id=nid;%>
+
+<form action="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.editPageSave">
+<input type="hidden" name="nid" value=<%=nid%>>
+<Table Border=0 cellpadding=10 cellspaceing=0>
+<Tr>
+<Td bgcolor="#CEF6EC"> Team ID :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamID" value="<%=teamID%>"> </Td>
+</Tr>
+<Tr>
+<Tr>
+<Td bgcolor="#CEF6EC"> Match Played :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="matchPlayed" value="<%=matchPlayed%>"> </Td>
+</Tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Point :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamPoint" value="<%=teamPoint%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Win :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamWin" value="<%=teamWin%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Lose :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamLose" value="<%=teamLose%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Tie :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamTie" value="<%=teamTie%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Goal Scored :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamGoalScored" value="<%=teamGoalScored%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Goal Taken :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamGoalTaken" value="<%=teamGoalTaken%>"> </Td>
+</tr>
+
+<Tr>
+<Td bgcolor="#CEF6EC"> <br><br> </td>
+<Td bgcolor="#CEF6EC"> <Input type="submit" value="Submit"> </form>     |
+<a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass"><input type="button" value="Cancel"></a>
+</td>
+</Tr>
+</Table>
+
+</div>
+</body>
+</html>

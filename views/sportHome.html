@@ -1,0 +1,986 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "sportMainHome"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+  <title>EPL Update</title>
+  <style>
+    body{
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+    }
+    
+    .socialnetwork{
+        display: inline;
+        float: right;
+      }
+    
+      #sidenav{
+        margin: 0px;
+        padding: 0px;
+        position: static;
+         
+      }
+      #sidenav li{
+        margin-top: 30px;
+    
+      }
+      #signinbtn{
+        display: inline;
+        float: right;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-right: 30px;
+    }
+      .footer{
+      position: relative;
+      width: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+    
+    li{
+      list-style-type : none;
+    }
+    
+    a:link{
+      text-decoration : none;
+    }
+    
+    a:hover{
+      font-weight : bolder;
+      font-size: 20px;
+    }
+    
+    .submit{
+      text-align:right;
+    }
+    #mainContent{
+      display: none;
+      width: 70%;
+      height: 90%;
+    }
+    
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+
+        <div class="navbar-brand">English Premier League</div>
+        <div class="nav navbar-nav">
+          <button type="button" class="btn btn-info" id="signinbtn" data-toggle="modal" data-target="#signInModal"><span></span>Sign In</button>
+          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-3" id="sidenav">
+        <ul>
+          <li id="externallink"><a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.displayTeamTable">Teams</a></li>
+          <li id="externallink"><a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.displayPlayer">Top 20 Players</a></li>
+          <li id="externallink"><a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.displayStanding">Standing</a></li>
+          <li id="externallink"><a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.displayMatch">Matches</a></li>
+          <li id="externallink"><a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.displayMatchResult">Match Results</a></li>
+      </div>
+      <div class="col-md-9 col-sm-9 col-md-9-offset">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="modal fade" id="signInModal" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Admin Login</h4>
+                </div>
+                <div class="modal-body">
+                  <form role="form" action="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin" method="post">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" class="form-control" name="adminName" placeholder="Username" required autofocus/>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        <input type="password" name="adminPassword" class="form-control" placeholder="Password" tabindex="4">
+                      </div>
+                    </div>
+                    <div class="form-group submit">
+                      <input type="submit" class="btn btn-lg btn-primary" value="Sign in">
+                      <input type="reset" class="btn btn-lg btn-danger" value="Clear">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id ="mainContent">
+          <iframe id="contentArea" width="350" height="350"></iframe>
+          </div>
+
+          <div id="myCarousel" class="carousel slide">
+            <ol class="carousel-indicators">
+              <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#myCarousel" data-slide-to="1"></li>
+              <li data-target="#myCarousel" data-slide-to="2"></li>
+              <li data-target="#myCarousel" data-slide-to="3"></li>
+              <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="http://worldsoccertalk.com/wp-content/uploads/2015/07/Arsenal.jpg" alt="">
+              </div>
+              <div class="item">
+
+                <img src="http://cache3.asset-cache.net/gc/465886144-the-chelsea-team-pose-for-the-cameras-prior-gettyimages.jpg?v=1&c=IWSAsset&k=2&d=GkZZ8bf5zL1ZiijUmxa7QSoiCpBK5uwxfP%2B0d2hI49OxbkegGWwtUu40SaXAqu%2FFYBAQXE67s1VAYsdhGpljow%3D%3D" alt="">
+              </div>
+              <div class="item">
+
+                <img src="http://s.weltsport.net/bilder/teamfotos/640x360/543.jpg" alt="">
+              </div>
+              <div class="item">
+
+                <img src="http://static.sportskeeda.com/wp-content/uploads/2015/04/man-city-oldest-xi-europe-1428506699.jpg" alt="">
+              </div>
+              <div class="item">
+
+                <img src="http://assets1.lfcimages.com/uploads/players/1006__2425__besiktas560.jpg" alt="">
+              </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <footer class="footer">
+      <div class="panel-footer">
+        Sport Update Team
+        <div class="socialnetwork">
+          <a href="https://www.facebook.com/?stype=lo&jlou=AfeLuQ7lEYp0PMOnXxIFjyXzoNdwH9f5gjEDTpO6HLHBLnTPeLOaJCVuWiRosjts6b3M1tW2RYov1mNxwKopRB28&smuh=36901&lh=Ac-7ZY6HIDVfDb-j" <i class="fa fa-facebook-official" style="font-size:30px;color:blue; padding-right: 30px"></i>
+          </a>
+          <a href="https://accounts.google.com/ServiceLogin?sacu=1&continue=https%3A%2F%2Faccounts.google.com%2FManageAccount&followup=https%3A%2F%2Faccounts.google.com%2FManageAccount#identifier" <i class="fa fa-google-plus" style="font-size:25px;color:red; padding-right: 30px; position: relative;"></i>
+          </a>
+          <a href="https://twitter.com/?utm_source=google&utm_medium=cpc&utm_campaign=PFX_SEM_GW_US_EVERGREEN_TIER%201_EXACT_LPTESTLOHP&utm_content=Twitter&utm_term=twitter&gclid=COmp5PXZkskCFVcSHwodSAAIVA&gclsrc=aw.ds" <i class="fa fa-twitter" style="font-size:32px;"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+
+
+<!-- Admin Page -->
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "checkLogin"%>
+<%@plsql parameter="adminName" default="null"%>
+<%@plsql parameter="adminPassword" default="null"%>
+<%!password sportUpdateAdmin.admin_password%type;%>
+<%!message Varchar(400);%>
+<%newCookie := getCookie('anyName');%>
+<%!newCookie number(4);%>
+<html>
+<head>
+<title>Admin Home</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<style>
+	table, th, td{
+		text-align: center;
+	}
+	th{
+		font-size: 20px;
+		font-weight: bold;
+		color: #17174f;
+	}
+</style>
+<script>
+
+function fdelete()
+{
+	confirm("Are you sure you want to delete the record!");
+}
+</script>
+</head>
+<body>
+<div align="center"><p><h1>Admin Home <h1><h3> Welcome User:   <%=adminName%></h3></p>
+
+<% select admin_password into password from sportUpdateadmin where admin_username=adminName;%>
+<%=adminPassword%> = <%=password%> 
+<p> Cookie Value: <%=getCookie%></p>
+
+<% 
+	IF password = adminPassword THEN
+	message:='<h3> Login is Successful </h3>';
+	ELSE
+	message:='<h3> Login is Failed </h3>';
+	END IF;
+%>
+<%=message%>
+	
+<Table Width=80% Border=0>
+<Center><!-- Start Page Content -->
+<table border="0" cellpadding="11" cellspacing="0" width=85% summary="">
+	<tr font-size="28px">
+		<th>standing</th>
+		<th>Team Name</th>
+		<th>Match Played</th>
+		<th>Team Point</th>
+		<th>Team Win</th>
+		<th>Team Lose</th>
+		<th>Team Tie</th>
+		<th>Team Goal Scored</th>
+		<th>Team Goal Taken</th>
+	</tr>
+
+<%for list_row in (select standing_id, team_name, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken from standing right join team on standing.team_id = team.team_id ORDER BY standing_id) loop%>
+<tr BGCOLOR="#E0E0E0">
+<td>
+<H3><%=list_row.standing_id%></H3>
+</td>
+<td>
+<H3><%=list_row.team_name%></H3>
+</td>
+<td>
+<H3><%=list_row.match_played%></H3>
+</td>
+<td>
+<H3><%=list_row.team_point%></H3>
+</td>
+<td>
+<H3><%=list_row.team_win%></H3>
+</td>
+<td>
+<H3><%=list_row.team_lose%></H3>
+</td>
+<td>
+<H3><%=list_row.team_tie%></H3>
+</td>
+<td>
+<H3><%=list_row.team_goalScored%></H3>
+</td>
+<td>
+<H3><%=list_row.team_goalTaken%></H3>
+</td>
+
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.editPage?nid=<%=list_row.standing_id%> class="btn btn-info btn-lg"><span class="glyphicon glyphicon-edit"></span> Edit </a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.upPage?nid=<%=list_row.standing_id%>><span class="glyphicon glyphicon-circle-arrow-up"></span></a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.downPage?nid=<%=list_row.standing_id%>><span class="glyphicon glyphicon-circle-arrow-down"></span></a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.deletePage?nid=<%=list_row.standing_id%> onclick="return confirm('Are you sure? Delete')"> <Font color=red> <span class="glyphicon glyphicon-trash"></span> </a></font></Td>
+</tr>
+<%end loop;%>
+</table>
+<Br><Hr><BR>
+</Center>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<!-- Update the standing -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "updateStanding"%>
+<%!cat_id standing.standing_id%type;%>
+
+<head>
+<title>Update Standing</title>
+</head>
+<body>
+
+<div align="center"><p><h1>Add NEW Heading</h1></p>
+<br>
+<hr />
+
+<form action="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.newhsave">
+<Table Border=0 cellpadding=10 cellspaceing=0>
+<Tr>
+<Td bgcolor=#CEF6EC> Heading :  </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strn" value=""> </Td>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Detail:  </td>
+<Td bgcolor=#D8F6CE> <textarea cols="40" rows="5" name="strd">  </textarea>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Category: </td>
+<Td bgcolor=#D8F6CE> <Select name="cid">
+<%for list_row in (select standing_id, team_name, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken from standing right join team on standing.team_id = team.team_id ORDER BY standing_id) loop%>
+<option value=<%=list_row.standing_id%>>
+	<%=list_row.team_name%> 
+	<%=list_row.match_played%> 
+	<%=list_row.team_point%> 
+	<%=list_row.team_win%> 
+	<%=list_row.team_lose%> 
+	<%=list_row.team_tie%> 
+	<%=list_row.team_goalScored%> 
+	<%=list_row.team_goalTaken%> 
+</option>
+<%end loop;%>
+</Select>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Date :  </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strdate" value=""> Formate: DD-MMM-YY
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F1 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf1" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F2 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf2" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F3 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf3" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> <br><br> </td>
+<Td bgcolor=#CEF6EC> <Input type="submit" value="Submit"> </form>     |     
+<a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass><input type="button" value=Cancel></a>
+</td>
+</Tr>
+</Table>
+
+</div>
+</body>
+</html>
+
+<!-- Edit page -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "editPage"%>
+<%@plsql parameter="nid" default="null"%>
+<%!teamID standing.team_id%type;%>
+<%!matchPlayed standing.match_played%type;%>
+<%!teamPoint standing.team_point%type;%>
+<%!teamWin standing.team_win%type;%>
+<%!teamLose standing.team_lose%type;%>
+<%!teamTie standing.team_tie%type;%>
+<%!teamGoalScored standing.team_goalScored%type;%>
+<%!teamGoalTaken standing.team_goalTaken%type;%>
+<%!strcat Varchar(11);%>
+
+<head>
+<title>Edit Heading</title>
+</head>
+<body>
+<div align="center"><p><h1>Edit Heading</h1></p>
+<br>
+<hr />
+
+<% select team_id, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken into teamID, matchPlayed, teamPoint, teamWin, teamLose, teamTie, teamGoalScored, teamGoalTaken from standing where standing_id=nid;%>
+
+<form action="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.editPageSave">
+<input type="hidden" name="nid" value=<%=nid%>>
+<Table Border=0 cellpadding=10 cellspaceing=0>
+<Tr>
+<Td bgcolor="#CEF6EC"> Team ID :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamID" value="<%=teamID%>"> </Td>
+</Tr>
+<Tr>
+<Tr>
+<Td bgcolor="#CEF6EC"> Match Played :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="matchPlayed" value="<%=matchPlayed%>"> </Td>
+</Tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Point :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamPoint" value="<%=teamPoint%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Win :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamWin" value="<%=teamWin%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Lose :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamLose" value="<%=teamLose%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Tie :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamTie" value="<%=teamTie%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Goal Scored :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamGoalScored" value="<%=teamGoalScored%>"> </Td>
+</tr>
+<tr>
+<Td bgcolor="#CEF6EC"> Team Goal Taken :  </td>
+<Td bgcolor="#D8F6CE"> <input type="text" name="teamGoalTaken" value="<%=teamGoalTaken%>"> </Td>
+</tr>
+
+<Tr>
+<Td bgcolor="#CEF6EC"> <br><br> </td>
+<Td bgcolor="#CEF6EC"> <Input type="submit" value="Submit"> </form>     |     
+<a href="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass"><input type="button" value="Cancel"></a>
+</td>
+</Tr>
+</Table>
+
+</div> 
+</body>
+</html>
+
+
+<!--Edit Save -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "editPageSave"%>
+<%@plsql parameter="nid" default="null"%>
+<%@plsql parameter="teamID" default="null"%>
+<%@plsql parameter="matchPlayed" default="null"%>
+<%@plsql parameter="teamPoint" default="null"%>
+<%@plsql parameter="teamWin" default="null"%>
+<%@plsql parameter="teamLose" default="null"%>
+<%@plsql parameter="teamTie" default="null"%>
+<%@plsql parameter="teamGoalScored" default="null"%>
+<%@plsql parameter="teamGoalTaken" default="null"%>
+
+
+<% Update standing Set team_id=teamID, match_played=matchPlayed,
+ team_point=teamPoint, team_win=teamWin, team_lose=teamLose, team_tie=teamTie, 
+ team_goalScored=teamGoalScored, team_goalTaken=teamGoalTaken where standing_id=nid; %>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">
+
+
+<!-- Move up item page -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "upPage"%>
+<%@plsql parameter="nid" default="null"%>
+<%!teamID standing.team_id%type;%>
+<%!teamMatch standing.match_played%type;%>
+<%!teamPoint standing.team_point%type;%>
+<%!teamWin standing.team_win%type;%>
+<%!teamLose standing.team_lose%type;%>
+<%!teamTie standing.team_tie%type;%>
+<%!teamGoalScored standing.team_goalScored%type;%>
+<%!teamGoalTaken standing.team_goalTaken%type;%>
+<%!updateID Number;%>
+<%!updateMatch Number;%>
+<%!updatePoint Number;%>
+<%!updateWin Number;%>
+<%!updateLose Number;%>
+<%!updateTie Number;%>
+<%!updateGoalScored Number;%>
+<%!updateGoalTaken Number;%>
+<%!newID Number;%>
+<% newID:=TO_NUMBER(nid)-1; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into teamID, teamMatch, teamPoint, teamWin, teamLose, teamTie,
+teamGoalScored, teamGoalTaken
+from standing where standing_id=nid order by team_id; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into updateID, updateMatch, updatePoint, updateWin, updateLose, updateTie,
+updateGoalScored, updateGoalTaken
+from standing where standing_id=newID
+order by team_id; %>
+
+<% Update standing Set team_id=updateID, match_played=updateMatch, team_point=updatePoint, team_win=updateWin, team_lose=updateLose, team_tie=updateTie, team_goalScored=updateGoalScored, team_goalTaken=updateGoalTaken
+where standing_id=nid; %>
+<%=updateID%> <p> --- </p> <%=nid%>
+
+<% Update standing Set team_id=teamID, match_played=teamMatch, team_point=teamPoint, team_win=teamWin, team_lose=teamLose, team_tie=teamTie, team_goalScored=teamGoalScored, team_goalTaken=teamGoalTaken
+where standing_id=newID; %>
+<BR>
+<%=teamID%> <p> --- </p> <%=newID%>
+<% commit; %>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">
+
+
+<!-- Move down item page -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "downPage"%>
+<%@plsql parameter="nid" default="null"%>
+<%!teamID standing.team_id%type;%>
+<%!teamMatch standing.match_played%type;%>
+<%!teamPoint standing.team_point%type;%>
+<%!teamWin standing.team_win%type;%>
+<%!teamLose standing.team_lose%type;%>
+<%!teamTie standing.team_tie%type;%>
+<%!teamGoalScored standing.team_goalScored%type;%>
+<%!teamGoalTaken standing.team_goalTaken%type;%>
+<%!updateID Number;%>
+<%!updateMatch Number;%>
+<%!updatePoint Number;%>
+<%!updateWin Number;%>
+<%!updateLose Number;%>
+<%!updateTie Number;%>
+<%!updateGoalScored Number;%>
+<%!updateGoalTaken Number;%>
+<%!newID Number;%>
+<% newID:=TO_NUMBER(nid)+1; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into teamID, teamMatch, teamPoint, teamWin, teamLose, teamTie,
+teamGoalScored, teamGoalTaken
+from standing where standing_id=nid order by team_id; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into updateID, updateMatch, updatePoint, updateWin, updateLose, updateTie,
+updateGoalScored, updateGoalTaken
+from standing where standing_id=newID
+order by team_id; %>
+
+<% Update standing Set team_id=updateID, match_played=updateMatch, team_point=updatePoint, team_win=updateWin, team_lose=updateLose, team_tie=updateTie, team_goalScored=updateGoalScored, team_goalTaken=updateGoalTaken
+where standing_id=nid; %>
+<%=updateID%> <p> --- </p> <%=nid%>
+
+<% Update standing Set team_id=teamID, match_played=teamMatch, team_point=teamPoint, team_win=teamWin, team_lose=teamLose, team_tie=teamTie, team_goalScored=teamGoalScored, team_goalTaken=teamGoalTaken
+where standing_id=newID; %>
+<BR>
+<%=teamID%> <p> --- </p> <%=newID%>
+<% commit; %>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">
+
+
+
+<!-- Delete Page -->
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "deletePage"%>
+<%@plsql parameter="nid" default="null"%>
+
+<%
+ delete from standing where standing_id=nid; 
+ Commit;
+ %>
+ <META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">
+
+
+
+<!-- Create cookie -->
+
+create or replace procedure set_cookie(
+	cookie_name in varchar2,
+	cookie_value in varchar2,
+	expire_time in date default null
+)
+
+is 
+
+Begin
+owa_util.mime.header(bcolse_header=>false);
+owa_cookie.send(cookie_name, cookie_value, expire_time);
+owa_util.http_header_close;
+
+End;
+
+
+<!-- Get cookie -->
+
+create or replace function get_cookie(cookie_name in varchar2)
+
+return number is 
+cookie_var owa_cookie.cookie;
+
+BEGIN
+cookie_var := owa_cookie.get(cookie_name);
+if cookie_var.num_vals != 0 then
+	return cookie_var.vals(1);
+else
+	return null;
+end if;
+
+END;
+
+<!--Display team table -->
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayTeamTable" %>
+
+<%!
+  CURSOR team_cursor IS
+  SELECT team_name, team_stadiumName, team_nickname
+  FROM team
+  ORDER BY team_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Teams</title>
+	<style>
+		#teamTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}
+	</style>
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>EPL Teams</h1></center>
+<table id="teamTable">
+<tr>
+<th>Team</th>
+<th>Stadium</th>
+<th>Nickname</th>
+</tr>
+<%  FOR cursor_team IN team_cursor LOOP %>
+  <tr>
+  <td> <%= cursor_team.team_name %> </td>
+  <td> <%= cursor_team.team_stadiumName %> </td>
+  <td> <%= cursor_team.team_nickname %> </td>
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>
+
+
+
+<!-- Display Players -->
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayPlayer" %>
+	Display the team table containing team name, stadium, and nickname
+-->
+<%!
+  CURSOR player_cursor IS
+  SELECT player_firstname, player_lastname, player_position, player_country, player_salary
+  FROM player
+  ORDER BY player_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Teams</title>
+<style>
+	#playerTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}
+	</style>
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>Top 20 Players</h1></center>
+<table width="40%" border="1" id="playerTable">
+<tr>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Position</th>
+<th>Country</th>
+<th>Salary(Per Week)</th>
+</tr>
+<%  FOR cursor_player IN player_cursor LOOP %>
+  <tr>
+  <td> <%= cursor_player.player_firstname%></td>
+  <td> <%= cursor_player.player_lastname%></td>
+  <td> <%= cursor_player.player_position%></td>
+  <td> <%= cursor_player.player_country%></td>
+  <td> <%= cursor_player.player_salary%></td>
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>
+
+
+<!-- Display the table standing-->
+
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayStanding" %>
+
+<%!
+  CURSOR standing_cursor IS
+  SELECT team_name, match_played, team_win, team_tie, team_lose, team_goalScored, team_goalTaken, team_point
+  FROM team, standing
+  where team.team_id = standing.team_id
+  ORDER BY standing_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Table</title>
+<style>
+	#standingTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}
+	</style>
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>EPL Standing</h1></center>
+<table id="standingTable">
+<tr>
+<th>Team</th>
+<th>Played</th>
+<th>Win</th>
+<th>Tie</th>
+<th>Lose</th>
+<th>Goal Scored</th>
+<th>Goal Taken</th>
+<th>Point</th>
+</tr>
+<%  FOR cursor_standing IN standing_cursor LOOP %>
+  <tr>
+  <td> <%= cursor_standing.team_name%></td>
+  <td> <%= cursor_standing.match_played%></td>
+  <td> <%= cursor_standing.team_win%></td>
+  <td> <%= cursor_standing.team_tie%></td>
+  <td> <%= cursor_standing.team_lose%></td>
+  <td> <%= cursor_standing.team_goalScored%></td>
+  <td> <%= cursor_standing.team_goalTaken%></td>
+  <td> <%= cursor_standing.team_point%></td>
+  
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>
+
+<!-- Display the table match-->
+
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayMatch" %>
+
+<%!
+  CURSOR match_cursor IS
+  SELECT hometeam as Hometeam, awayteam as Awayteam
+  FROM match
+  ORDER BY match_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Table</title>
+<style>
+	#matchTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}
+	</style>
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>Match Details</h1></center>
+<table id="matchTable">
+<tr>
+<th>Hometeam</th>
+<th>Versus</th>
+<th>Awayteam</th>
+</tr>
+<%  FOR cursor_match IN match_cursor LOOP %>
+  <tr>
+  <td> <center><%= cursor_match.hometeam%></center></td>
+  <td><center>VS</center> </td>
+  <td><center><%= cursor_match.awayteam%></center></td>
+  
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>
+
+
+<!-- Display the table match results-->
+
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayMatchResult" %>
+
+<%!
+  CURSOR result_cursor IS
+  SELECT hometeam, hometeam_scored, awayteam_scored, awayteam
+  FROM match_result
+  right join match
+  on match.match_id = match_result.match_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Table</title>
+<style>
+	#matchResultTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}
+	</style>
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>Match Results</h1></center>
+<table id="matchResultTable">
+<tr>
+<th>Hometeam</th>
+<th>Hometeam Score</th>
+<th>Awayteam Score</th>
+<th>Awayteam</th>
+</tr>
+<%  FOR cursor_result IN result_cursor LOOP %>
+  <tr>
+  <td> <center><%= cursor_result.hometeam%></center></td>
+  <td> <center><%= cursor_result.hometeam_scored%></center></td>
+  <td> <center><%= cursor_result.awayteam_scored%></center></td>
+  <td><center><%= cursor_result.awayteam%></center></td>
+  
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>

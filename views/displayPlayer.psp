@@ -1,0 +1,39 @@
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayPlayer" %>
+	Display the team table containing team name, stadium, and nickname
+-->
+<%!
+  CURSOR player_cursor IS
+  SELECT player_firstname, player_lastname, player_position, player_country, player_salary
+  FROM player
+  ORDER BY player_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Teams</title>
+<link rel="stylesheet" href="styles/displayPlayers.css">
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>Top 20 Players</h1></center>
+<table width="40%" border="1" id="playerTable">
+<tr>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Position</th>
+<th>Country</th>
+<th>Salary(Per Week)</th>
+</tr>
+<%  FOR cursor_player IN player_cursor LOOP %>
+  <tr>
+  <td> <%= cursor_player.player_firstname%></td>
+  <td> <%= cursor_player.player_lastname%></td>
+  <td> <%= cursor_player.player_position%></td>
+  <td> <%= cursor_player.player_country%></td>
+  <td> <%= cursor_player.player_salary%></td>
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>

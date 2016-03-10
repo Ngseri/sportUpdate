@@ -1,0 +1,46 @@
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayStanding" %>
+
+<%!
+  CURSOR standing_cursor IS
+  SELECT team_name, match_played, team_win, team_tie, team_lose, team_goalScored, team_goalTaken, team_point
+  FROM team, standing
+  where team.team_id = standing.team_id
+  ORDER BY standing_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Table</title>
+<link rel="stylesheet" href="styles/displayStanding.css">
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>EPL Standing</h1></center>
+<table id="standingTable">
+<tr>
+<th>Team</th>
+<th>Played</th>
+<th>Win</th>
+<th>Tie</th>
+<th>Lose</th>
+<th>Goal Scored</th>
+<th>Goal Taken</th>
+<th>Point</th>
+</tr>
+<%  FOR cursor_standing IN standing_cursor LOOP %>
+  <tr>
+  <td> <%= cursor_standing.team_name%></td>
+  <td> <%= cursor_standing.match_played%></td>
+  <td> <%= cursor_standing.team_win%></td>
+  <td> <%= cursor_standing.team_tie%></td>
+  <td> <%= cursor_standing.team_lose%></td>
+  <td> <%= cursor_standing.team_goalScored%></td>
+  <td> <%= cursor_standing.team_goalTaken%></td>
+  <td> <%= cursor_standing.team_point%></td>
+
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>

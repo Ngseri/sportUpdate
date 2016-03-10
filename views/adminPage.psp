@@ -1,0 +1,96 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "checkLogin"%>
+<%@plsql parameter="adminName" default="null"%>
+<%@plsql parameter="adminPassword" default="null"%>
+<%!password sportUpdateAdmin.admin_password%type;%>
+<%!message Varchar(400);%>
+<%newCookie := getCookie('anyName');%>
+<%!newCookie number(4);%>
+<html>
+<head>
+<title>Admin Home</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="styles/admin.css">
+
+<script>
+
+function fdelete()
+{
+	confirm("Are you sure you want to delete the record!");
+}
+</script>
+</head>
+<body>
+<div align="center"><p><h1>Admin Home <h1><h3> Welcome User:   <%=adminName%></h3></p>
+
+<% select admin_password into password from sportUpdateadmin where admin_username=adminName;%>
+<%=adminPassword%> = <%=password%>
+<p> Cookie Value: <%=getCookie%></p>
+
+<%
+	IF password = adminPassword THEN
+	message:='<h3> Login is Successful </h3>';
+	ELSE
+	message:='<h3> Login is Failed </h3>';
+	END IF;
+%>
+<%=message%>
+
+<Table Width=80% Border=0>
+<Center><!-- Start Page Content -->
+<table border="0" cellpadding="11" cellspacing="0" width=85% summary="">
+	<tr font-size="28px">
+		<th>standing</th>
+		<th>Team Name</th>
+		<th>Match Played</th>
+		<th>Team Point</th>
+		<th>Team Win</th>
+		<th>Team Lose</th>
+		<th>Team Tie</th>
+		<th>Team Goal Scored</th>
+		<th>Team Goal Taken</th>
+	</tr>
+
+<%for list_row in (select standing_id, team_name, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken from standing right join team on standing.team_id = team.team_id ORDER BY standing_id) loop%>
+<tr BGCOLOR="#E0E0E0">
+<td>
+<H3><%=list_row.standing_id%></H3>
+</td>
+<td>
+<H3><%=list_row.team_name%></H3>
+</td>
+<td>
+<H3><%=list_row.match_played%></H3>
+</td>
+<td>
+<H3><%=list_row.team_point%></H3>
+</td>
+<td>
+<H3><%=list_row.team_win%></H3>
+</td>
+<td>
+<H3><%=list_row.team_lose%></H3>
+</td>
+<td>
+<H3><%=list_row.team_tie%></H3>
+</td>
+<td>
+<H3><%=list_row.team_goalScored%></H3>
+</td>
+<td>
+<H3><%=list_row.team_goalTaken%></H3>
+</td>
+
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.editPage?nid=<%=list_row.standing_id%> class="btn btn-info btn-lg"><span class="glyphicon glyphicon-edit"></span> Edit </a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.upPage?nid=<%=list_row.standing_id%>><span class="glyphicon glyphicon-circle-arrow-up"></span></a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.downPage?nid=<%=list_row.standing_id%>><span class="glyphicon glyphicon-circle-arrow-down"></span></a></Td>
+<Td><a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.deletePage?nid=<%=list_row.standing_id%> onclick="return confirm('Are you sure? Delete')"> <Font color=red> <span class="glyphicon glyphicon-trash"></span> </a></font></Td>
+</tr>
+<%end loop;%>
+</table>
+<Br><Hr><BR>
+</Center>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "editPageSave"%>
+<%@plsql parameter="nid" default="null"%>
+<%@plsql parameter="teamID" default="null"%>
+<%@plsql parameter="matchPlayed" default="null"%>
+<%@plsql parameter="teamPoint" default="null"%>
+<%@plsql parameter="teamWin" default="null"%>
+<%@plsql parameter="teamLose" default="null"%>
+<%@plsql parameter="teamTie" default="null"%>
+<%@plsql parameter="teamGoalScored" default="null"%>
+<%@plsql parameter="teamGoalTaken" default="null"%>
+
+
+<% Update standing Set team_id=teamID, match_played=matchPlayed,
+ team_point=teamPoint, team_win=teamWin, team_lose=teamLose, team_tie=teamTie,
+ team_goalScored=teamGoalScored, team_goalTaken=teamGoalTaken where standing_id=nid; %>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">

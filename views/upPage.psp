@@ -1,0 +1,45 @@
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "upPage"%>
+<%@plsql parameter="nid" default="null"%>
+<%!teamID standing.team_id%type;%>
+<%!teamMatch standing.match_played%type;%>
+<%!teamPoint standing.team_point%type;%>
+<%!teamWin standing.team_win%type;%>
+<%!teamLose standing.team_lose%type;%>
+<%!teamTie standing.team_tie%type;%>
+<%!teamGoalScored standing.team_goalScored%type;%>
+<%!teamGoalTaken standing.team_goalTaken%type;%>
+<%!updateID Number;%>
+<%!updateMatch Number;%>
+<%!updatePoint Number;%>
+<%!updateWin Number;%>
+<%!updateLose Number;%>
+<%!updateTie Number;%>
+<%!updateGoalScored Number;%>
+<%!updateGoalTaken Number;%>
+<%!newID Number;%>
+<% newID:=TO_NUMBER(nid)-1; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into teamID, teamMatch, teamPoint, teamWin, teamLose, teamTie,
+teamGoalScored, teamGoalTaken
+from standing where standing_id=nid order by team_id; %>
+
+<% Select team_id, match_played, team_point, team_win, team_lose, team_tie,
+team_goalScored, team_goalTaken
+into updateID, updateMatch, updatePoint, updateWin, updateLose, updateTie,
+updateGoalScored, updateGoalTaken
+from standing where standing_id=newID
+order by team_id; %>
+
+<% Update standing Set team_id=updateID, match_played=updateMatch, team_point=updatePoint, team_win=updateWin, team_lose=updateLose, team_tie=updateTie, team_goalScored=updateGoalScored, team_goalTaken=updateGoalTaken
+where standing_id=nid; %>
+<%=updateID%> <p> --- </p> <%=nid%>
+
+<% Update standing Set team_id=teamID, match_played=teamMatch, team_point=teamPoint, team_win=teamWin, team_lose=teamLose, team_tie=teamTie, team_goalScored=teamGoalScored, team_goalTaken=teamGoalTaken
+where standing_id=newID; %>
+<BR>
+<%=teamID%> <p> --- </p> <%=newID%>
+<% commit; %>
+<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass">

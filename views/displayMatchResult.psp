@@ -1,0 +1,39 @@
+
+<%@ page language="PL/SQL" %>
+<%@ page contentType="text/html" %>
+<%@ plsql procedure="displayMatchResult" %>
+
+<%!
+  CURSOR result_cursor IS
+  SELECT hometeam, hometeam_scored, awayteam_scored, awayteam
+  FROM match_result
+  right join match
+  on match.match_id = match_result.match_id;
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<title>Premier League Table</title>
+<link rel="stylesheet" href="styles/displayMatchResult.css">
+</head>
+<body TEXT="#000000" BGCOLOR="#FFFFFF">
+<center><h1>Match Results</h1></center>
+<table id="matchResultTable">
+<tr>
+<th>Hometeam</th>
+<th>Hometeam Score</th>
+<th>Awayteam Score</th>
+<th>Awayteam</th>
+</tr>
+<%  FOR cursor_result IN result_cursor LOOP %>
+  <tr>
+  <td> <center><%= cursor_result.hometeam%></center></td>
+  <td> <center><%= cursor_result.hometeam_scored%></center></td>
+  <td> <center><%= cursor_result.awayteam_scored%></center></td>
+  <td><center><%= cursor_result.awayteam%></center></td>
+
+  </tr>
+<%  END LOOP; %>
+</table>
+</body>
+</html>

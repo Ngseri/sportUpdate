@@ -1,0 +1,31 @@
+
+	#matchResultTable{
+			border-collapse: collapse;
+			padding-left: 10px;
+			width: 80%;
+			margin: 0px auto;
+			text-align: center;
+		}
+		table, td, th{
+		border: none;
+		}
+		td:first-child{
+			font-weight: bold;
+			font-size: 18px;
+
+		}
+
+		th{
+			background-color: #e5ffff;
+			height: 30px;
+			font-size: 20px;
+			font-weight: bold;
+			color: blue;
+		}
+
+		tr{
+			height: 30px;
+		}
+		table tr:nth-child(odd){
+			background-color: #e5ffff;
+		}

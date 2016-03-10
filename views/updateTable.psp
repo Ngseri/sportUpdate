@@ -1,0 +1,68 @@
+
+<%@page language= "PL/SQL"%>
+<%@plsql procedure= "updateStanding"%>
+<%!cat_id standing.standing_id%type;%>
+
+<head>
+<title>Update Standing</title>
+</head>
+<body>
+
+<div align="center"><p><h1>Add NEW Heading</h1></p>
+<br>
+<hr />
+
+<form action="http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.newhsave">
+<Table Border=0 cellpadding=10 cellspaceing=0>
+<Tr>
+<Td bgcolor=#CEF6EC> Heading :  </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strn" value=""> </Td>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Detail:  </td>
+<Td bgcolor=#D8F6CE> <textarea cols="40" rows="5" name="strd">  </textarea>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Category: </td>
+<Td bgcolor=#D8F6CE> <Select name="cid">
+<%for list_row in (select standing_id, team_name, match_played, team_point, team_win, team_lose, team_tie, team_goalScored, team_goalTaken from standing right join team on standing.team_id = team.team_id ORDER BY standing_id) loop%>
+<option value=<%=list_row.standing_id%>>
+	<%=list_row.team_name%>
+	<%=list_row.match_played%>
+	<%=list_row.team_point%>
+	<%=list_row.team_win%>
+	<%=list_row.team_lose%>
+	<%=list_row.team_tie%>
+	<%=list_row.team_goalScored%>
+	<%=list_row.team_goalTaken%>
+</option>
+<%end loop;%>
+</Select>
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> Date :  </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strdate" value=""> Formate: DD-MMM-YY
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F1 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf1" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F2 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf2" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> F3 : </td>
+<Td bgcolor=#D8F6CE> <input type="text" name="strf3" value="">
+</Tr>
+<Tr>
+<Td bgcolor=#CEF6EC> <br><br> </td>
+<Td bgcolor=#CEF6EC> <Input type="submit" value="Submit"> </form>     |
+<a href=http://oracle.is.umbc.edu:8080/classpsp/IS420_YH61054.checkLogin?adminName=admin&adminPassword=pass><input type="button" value=Cancel></a>
+</td>
+</Tr>
+</Table>
+
+</div>
+</body>
+</html>
